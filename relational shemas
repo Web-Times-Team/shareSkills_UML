@@ -1,0 +1,45 @@
+users (ID, username, lastName, firstName, dateOfBirth, password, email, country, region, city)
+sharers (ID)
+teachers (ID, price)
+employers (ID, compagnyName)
+jobs (ID, title, description, skills, salary, devise)
+sharersApplys (JOBID, SHARERID)
+experiences (ID, startDate, endDate, title, location, description, sharerId)
+teachersApplys (TEACHERID, JOBID)
+references (ID, author, comment, sharerId)
+photoAlbums (ID, SHARERID, name, description, created, modified )
+photos (ID, PHOTOALBUMID, SHARERID, photo, created, type)
+skills (ID, sharerId, name, level, isSearching)
+sharedsSkills (SKILLID, SHARERID)
+teachSkills (SKILLID, TEACHERID)
+educations (ID, startdate, endDate, qualification, location, description, sharedId)
+conversations (CONVERSATIONID, created, updated, creatorId)
+participipations (CONVERSATIONID, PARTICIPANTID)
+messages (ID, CONVERSATIONID, content, comentary, type, created, status)
+repMessages (ID, content, type, created, status, MESSAGEID)
+
+/** constaints **/
+sharers [id] ⊆ users [id]
+teachers [id] ⊆ users [id]
+employers[id] ⊆ users [id]
+sharersApplys [jobId] ⊆ jobs[id]
+sharersApplys [sharerId] ⊆ sharers [id]
+experiences [sharerId] ⊆ sharers [id]
+teachersApplys [teacherId] = teachers [id]
+teachersApplys [jobId] = jobs [id]
+references [sharerId] ⊆ sharers [id]
+photoAlbums [SHARERID] = sharers [id]
+photos [PHOTOALBUMID] =  photoAlbums [ID]
+sharedsSkills [SKILLID] = skills [ID]
+sharedsSkills [SHARERID] = sharers [id]
+teachSkills [SKILLID] = skills [ID]
+teachSkills [TEACHERID] = teachers [id]
+educations [sharedId] ⊆  sharers [id]
+conversations [creatorId] ⊆ sharers [id]
+participipations[CONVERSATIONID] ⊆ conversations [id]
+participipations[PARTICIPANTID] ⊆ sharers [id]
+messages[conversationId] = conversations [id]
+repMessages[MESSAGEID]= Message [id]
+
+
+sharers[id] ∪ teachers[id] U employers [id] = users [id]
